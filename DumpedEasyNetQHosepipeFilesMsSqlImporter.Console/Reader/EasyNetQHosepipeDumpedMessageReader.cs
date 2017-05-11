@@ -50,6 +50,7 @@
                         Message = x.SingleOrDefault(y => y.Type == DumpedFileType.message).FileInfo,
                         Properties = x.SingleOrDefault(y => y.Type == DumpedFileType.properties).FileInfo
                     })
+                    .OrderBy(x => x.Index)
                     .ToList();
 
                 Log.Info($"Containing {dumpedMessageFilesInfos.Count()} dumped EasyNetQ Hosepipe messages");
