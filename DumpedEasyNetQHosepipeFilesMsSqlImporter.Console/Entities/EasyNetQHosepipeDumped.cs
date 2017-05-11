@@ -8,6 +8,8 @@
 
         public virtual EasyNetQHosepipeDumpedInfo Info { get; set; }
 
+        public virtual EasyNetQHosepipeDumpedErrorMessage Error { get; set; }
+
         public string MessageFilePath { get; set; }
 
         public string RawMessage { get; set; }

@@ -61,15 +61,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\EasyNetQHosepipeDumpedInfo.cs" />
-    <Compile Include="Entities\EasyNetQHosepipeDumpedMessage.cs" />
+    <Compile Include="Entities\EasyNetQHosepipeDumpedErrorMessage.cs" />
     <Compile Include="Entities\EasyNetQHosepipeDumpedProperties.cs" />
     <Compile Include="Entities\EasyNetQHosepipeDumped.cs" />
-    <Compile Include="Migrations\201705091404342_Initial.cs" />
-    <Compile Include="Migrations\201705091404342_Initial.Designer.cs">
-      <DependentUpon>201705091404342_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201705110753201_initial.cs" />
+    <Compile Include="Migrations\201705110753201_initial.Designer.cs">
+      <DependentUpon>201705110753201_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\DatabaseContext.cs" />
+    <Compile Include="Model\Mapping\EasyNetQHosepipeDumpedErrorMessageMap.cs" />
     <Compile Include="Model\Mapping\EasyNetQHosepipeDumpedPropertiesMap.cs" />
     <Compile Include="Model\Mapping\EasyNetQHosepipeDumpedMap.cs" />
     <Compile Include="Parameters.cs" />
@@ -87,8 +88,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705091404342_Initial.resx">
-      <DependentUpon>201705091404342_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705110753201_initial.resx">
+      <DependentUpon>201705110753201_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

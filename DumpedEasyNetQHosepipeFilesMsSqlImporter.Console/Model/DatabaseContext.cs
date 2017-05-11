@@ -29,5 +29,7 @@
         public DbSet<EasyNetQHosepipeDumpedProperties> Properties { get; set; }
 
         public DbSet<EasyNetQHosepipeDumpedInfo> Infos { get; set; }
+
+        public DbSet<EasyNetQHosepipeDumpedErrorMessage> Errors { get; set; }
     }
 }

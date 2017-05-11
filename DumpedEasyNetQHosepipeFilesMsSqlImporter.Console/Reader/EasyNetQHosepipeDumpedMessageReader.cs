@@ -17,7 +17,7 @@
             message,
             properties
         }
-        
+
         private static Logger Log = LogManager.GetCurrentClassLogger();
 
         public IEnumerable<EasyNetQHosepipeDumpedFilesInfo> EnumerateDumpedFilesInfos(string easyNetQHosepipeDumpFileDirectory, string rabbitMqQueueName)
@@ -44,6 +44,7 @@
                     .GroupBy(x => x.Index)
                     .Select(x => new EasyNetQHosepipeDumpedFilesInfo
                     {
+                        RabbitMqQueueName = rabbitMqQueueName,
                         Index = x.First().Index,
                         Info = x.SingleOrDefault(y => y.Type == DumpedFileType.info).FileInfo,
                         Message = x.SingleOrDefault(y => y.Type == DumpedFileType.message).FileInfo,
@@ -68,7 +69,7 @@
 
             Log.Info($"Reading info file: '{dumpedFilesInfo.Info.FullName}'");
             var info = File.ReadAllText(dumpedFilesInfo.Info.FullName);
-            
+
             Log.Info($"Reading properties file: '{dumpedFilesInfo.Properties.FullName}'");
             var properties = File.ReadAllText(dumpedFilesInfo.Properties.FullName);
 
@@ -86,9 +87,37 @@
                 MessageFilePath = dumpedFilesInfo.Message.FullName,
                 RawMessage = message
             };
-            
-            easyNetQHosepipeDumped.Properties = JsonConvert.DeserializeObject<EasyNetQHosepipeDumpedProperties>(properties);
-            easyNetQHosepipeDumped.Info = JsonConvert.DeserializeObject<EasyNetQHosepipeDumpedInfo>(info);
+
+            try
+            {
+                easyNetQHosepipeDumped.Properties = JsonConvert.DeserializeObject<EasyNetQHosepipeDumpedProperties>(properties);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, ex.Message);
+            }
+
+            try
+            {
+                easyNetQHosepipeDumped.Info = JsonConvert.DeserializeObject<EasyNetQHosepipeDumpedInfo>(info);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, ex.Message);
+            }
+
+            if (dumpedFilesInfo.RabbitMqQueueName == Parameters.EASYNETQ_DEFAULT_ERROR_QUEUE)
+            {
+                try
+                {
+
+                    easyNetQHosepipeDumped.Error = JsonConvert.DeserializeObject<EasyNetQHosepipeDumpedErrorMessage>(message);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, ex.Message);
+                }
+            }
 
             return easyNetQHosepipeDumped;
         }

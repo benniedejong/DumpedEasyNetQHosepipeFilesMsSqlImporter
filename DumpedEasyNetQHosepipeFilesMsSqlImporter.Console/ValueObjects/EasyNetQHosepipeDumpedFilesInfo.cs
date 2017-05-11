@@ -4,6 +4,8 @@
 
     public class EasyNetQHosepipeDumpedFilesInfo
     {
+        public string RabbitMqQueueName { get; set; }
+
         public int Index { get; set; }
 
         public FileInfo Info { get; set; }
